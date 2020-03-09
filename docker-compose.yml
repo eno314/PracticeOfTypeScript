@@ -1,0 +1,8 @@
+version: "3"
+services:
+  node_with_ts:
+    build: .
+    working_dir: /home/node/.
+    volumes: 
+      - .:/home/node/.
+    command: "npm start"
