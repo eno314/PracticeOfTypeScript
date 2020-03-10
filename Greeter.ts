@@ -1,8 +1,7 @@
 class Greeter {
-
-    greet(): string {
-        return "Hello World"
-    }
+  greet (): string {
+    return 'Hello World'
+  }
 }
 
 const greeter = new Greeter()
