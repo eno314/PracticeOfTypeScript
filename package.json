@@ -1,0 +1,26 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "This is eno314's practice of TypeScript.",
+  "main": "Greeter.js",
+  "scripts": {
+    "start": "node Greeter.js",
+    "build": "tsc Greeter.ts",
+    "prestart": "npm rum build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eno314/PracticeOfTypeScript.git"
+  },
+  "keywords": [],
+  "author": "eno314",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eno314/PracticeOfTypeScript/issues"
+  },
+  "homepage": "https://github.com/eno314/PracticeOfTypeScript#readme",
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  }
+}
