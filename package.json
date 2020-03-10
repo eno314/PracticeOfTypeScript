@@ -2,10 +2,10 @@
   "name": "node",
   "version": "1.0.0",
   "description": "This is eno314's practice of TypeScript.",
-  "main": "Greeter.js",
+  "main": "./out/Greeter.js",
   "scripts": {
-    "start": "node Greeter.js",
-    "build": "tsc Greeter.ts",
+    "start": "node ./out/Greeter.js",
+    "build": "tsc",
     "prestart": "npm rum build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
