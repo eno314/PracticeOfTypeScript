@@ -1,6 +1,8 @@
 name: Pull request CI on practice of TypeScript
 
 on:
+  push:
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
