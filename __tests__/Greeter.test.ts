@@ -1,4 +1,4 @@
-import { Greeter } from './Greeter'
+import { Greeter } from '../src/Greeter'
 
 test('greet returns "Hello world"', () => {
   const greeter = new Greeter()
