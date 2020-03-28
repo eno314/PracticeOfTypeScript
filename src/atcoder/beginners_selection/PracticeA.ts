@@ -1,25 +1,3 @@
-export class PracticeA {
-  private readonly inputLoader: () => string
-  private readonly inputParser: (input: string) => PracticeAInput
-  private readonly outputPrinter: (output: string) => void
-
-  constructor (
-    inputLoader: () => string,
-    inputParser: (input: string) => PracticeAInput,
-    outputPrinter: (output: string) => void
-  ) {
-    this.inputLoader = inputLoader
-    this.inputParser = inputParser
-    this.outputPrinter = outputPrinter
-  }
-
-  execute (): void {
-    const inputString = this.inputLoader()
-    const input = this.inputParser(inputString)
-    this.outputPrinter(input.toOutputString())
-  }
-}
-
 export class PracticeAInput {
   private readonly a: number
   private readonly b: number
@@ -63,41 +41,76 @@ export class PracticeAInput {
   }
 }
 
-export function practiceAInputParser (inputString: string): PracticeAInput {
-  const parsed = parseInputStringToArray(inputString)
-  return new PracticeAInput(parsed[0], parsed[1], parsed[2], parsed[3])
+export class PracticeAInputParser {
+  parse (inputString: string): PracticeAInput {
+    const parsed = this.parseInputStringToArray(inputString)
+    return new PracticeAInput(parsed[0], parsed[1], parsed[2], parsed[3])
+  }
+
+  private parseInputStringToArray (inputString: string): [number, number, number, string] {
+    const inputStrings = inputString.split('\n')
+    if (inputStrings.length < 3) {
+      throw new Error('input format is invalid.')
+    }
+
+    const a = this.parseNumberString(inputStrings[0])
+    const bc = this.parseBAndCToArray(inputStrings[1])
+
+    return [a, bc[0], bc[1], inputStrings[2]]
+  }
+
+  private parseBAndCToArray (bcString: string): [number, number] {
+    const bc = bcString.split(' ')
+    if (bc.length < 2) {
+      throw new Error('input format is invalid.')
+    }
+
+    const b = this.parseNumberString(bc[0])
+    const c = this.parseNumberString(bc[1])
+    return [b, c]
+  }
+
+  private parseNumberString (numberString: string): number {
+    if (numberString.length === 0) {
+      throw new Error('input format is invalid.')
+    }
+    const num = Number(numberString)
+    if (Number.isNaN(num)) {
+      throw new Error('input format is invalid.')
+    }
+    return num
+  }
 }
 
-function parseInputStringToArray (inputString: string): [number, number, number, string] {
-  const inputStrings = inputString.split('\n')
-  if (inputStrings.length < 3) {
-    throw new Error('input format is invalid.')
+export class PracticeA {
+  private readonly inputLoader: () => string
+  private readonly inputParser: PracticeAInputParser
+  private readonly outputPrinter: (output: string) => void
+
+  constructor (
+    inputLoader: () => string,
+    inputParser: PracticeAInputParser,
+    outputPrinter: (output: string) => void
+  ) {
+    this.inputLoader = inputLoader
+    this.inputParser = inputParser
+    this.outputPrinter = outputPrinter
   }
 
-  const a = parseNumberString(inputStrings[0])
-  const bc = parseBAndCToArray(inputStrings[1])
-
-  return [a, bc[0], bc[1], inputStrings[2]]
+  execute (): void {
+    const inputString = this.inputLoader()
+    const input = this.inputParser.parse(inputString)
+    this.outputPrinter(input.toOutputString())
+  }
 }
 
-function parseBAndCToArray (bcString: string): [number, number] {
-  const bc = bcString.split(' ')
-  if (bc.length < 2) {
-    throw new Error('input format is invalid.')
+export function main (): void {
+  const inputLoader = (): string => {
+    return require('fs').readFileSync('/dev/stdin', 'utf8')
   }
-
-  const b = parseNumberString(bc[0])
-  const c = parseNumberString(bc[1])
-  return [b, c]
-}
-
-function parseNumberString (numberString: string): number {
-  if (numberString.length === 0) {
-    throw new Error('input format is invalid.')
+  const outputPrinter = (output: string): void => {
+    console.log(output)
   }
-  const num = Number(numberString)
-  if (Number.isNaN(num)) {
-    throw new Error('input format is invalid.')
-  }
-  return num
+  const practiceA = new PracticeA(inputLoader, new PracticeAInputParser(), outputPrinter)
+  practiceA.execute()
 }
