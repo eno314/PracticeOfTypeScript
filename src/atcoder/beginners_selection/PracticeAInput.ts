@@ -37,6 +37,6 @@ export class PracticeAInput {
   }
 
   toOutputString (): string {
-    return ''
+    return `${this.a + this.b + this.c} ${this.s}`
   }
 }
