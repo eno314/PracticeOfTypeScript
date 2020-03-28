@@ -11,11 +11,7 @@ function parseInputStringToArray (inputString: string): [number, number, number,
     throw new Error('input format is invalid.')
   }
 
-  const a = parseInt(inputStrings[0])
-  if (Number.isNaN(a)) {
-    throw new Error('input format is invalid.')
-  }
-
+  const a = parseNumberString(inputStrings[0])
   const bc = parseBAndCToArray(inputStrings[1])
 
   return [a, bc[0], bc[1], inputStrings[2]]
@@ -27,11 +23,18 @@ function parseBAndCToArray (bcString: string): [number, number] {
     throw new Error('input format is invalid.')
   }
 
-  const b = parseInt(bc[0])
-  const c = parseInt(bc[1])
-  if (Number.isNaN(b) || Number.isNaN(c)) {
+  const b = parseNumberString(bc[0])
+  const c = parseNumberString(bc[1])
+  return [b, c]
+}
+
+function parseNumberString (numberString: string): number {
+  if (numberString.length === 0) {
     throw new Error('input format is invalid.')
   }
-
-  return [b, c]
+  const num = Number(numberString)
+  if (Number.isNaN(num)) {
+    throw new Error('input format is invalid.')
+  }
+  return num
 }
