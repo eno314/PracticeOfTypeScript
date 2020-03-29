@@ -74,3 +74,14 @@ export class Abc086A {
     this.outputPrinter(input.toOutput())
   }
 }
+
+export function main (): void {
+  const inputLoader = (): string => {
+    return require('fs').readFileSync('/dev/stdin', 'utf8')
+  }
+  const outputPrinter = (output: string): void => {
+    console.log(output)
+  }
+  const abc086A = new Abc086A(inputLoader, new InputParser(), outputPrinter)
+  abc086A.execute()
+}
