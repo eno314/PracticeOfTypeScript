@@ -1,3 +1,5 @@
+export type Output = 'Odd' | 'Even'
+
 export class Input {
   private readonly a: number
   private readonly b: number
@@ -21,8 +23,9 @@ export class Input {
     return num >= 1 && num <= 10000
   }
 
-  toOutputString (): string {
-    return ''
+  toOutput (): Output {
+    const product = this.a * this.b
+    return product % 2 === 0 ? 'Even' : 'Odd'
   }
 }
 
@@ -68,6 +71,6 @@ export class Abc086A {
   execute (): void {
     const inputString = this.inputLoader()
     const input = this.inputParser.parse(inputString)
-    this.outputPrinter(input.toOutputString())
+    this.outputPrinter(input.toOutput())
   }
 }

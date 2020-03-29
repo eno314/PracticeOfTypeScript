@@ -92,3 +92,23 @@ describe('InputParser ユニットテスト', () => {
     })
   })
 })
+
+describe('Input ユニットテスト', () => {
+  describe('整数a,bを出力値に変換する', () => {
+    test('aとbの積が偶数の場合、Evenと出力する', () => {
+      const input = new Input(3, 4)
+
+      const actual = input.toOutput()
+
+      expect(actual).toBe('Even')
+    })
+
+    test('aとbの積が奇数の場合、Oddと出力する', () => {
+      const input = new Input(1, 21)
+
+      const actual = input.toOutput()
+
+      expect(actual).toBe('Odd')
+    })
+  })
+})
