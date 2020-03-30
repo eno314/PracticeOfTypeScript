@@ -1,21 +1,27 @@
-type Square = '0' | '1'
+class Square {
+  private readonly value: '0' | '1'
+
+  constructor (value: string) {
+    if (value !== '0' && value !== '1') {
+      throw new Error('input string violates constraint.')
+    }
+    this.value = value
+  }
+
+  canPlaceMarble (): boolean {
+    return this.value === '1'
+  }
+}
 
 export class Squares {
   private readonly squares: Square[]
 
   constructor (...squareStrings: [string, string, string]) {
-    this.squares = squareStrings.map(this.validateSquareString)
-  }
-
-  private validateSquareString (squareString: string): Square {
-    if (squareString === '0' || squareString === '1') {
-      return squareString
-    }
-    throw new Error('input string violates constraint.')
+    this.squares = squareStrings.map(squareString => new Square(squareString))
   }
 
   countSquaresPlacedMarble (): number {
-    return this.squares.filter(square => square === '1').length
+    return this.squares.filter(square => square.canPlaceMarble()).length
   }
 }
 
