@@ -37,3 +37,7 @@ export class InputParser {
 export function loadInput (inputLoader: () => string): string {
   return inputLoader()
 }
+
+export function printOutput (output: string, outputPrinter: (output: string) => void): void {
+  outputPrinter(output)
+}

@@ -1,4 +1,4 @@
-import { InputParser, loadInput, Squares } from './Abc081A'
+import { InputParser, loadInput, printOutput, Squares } from './Abc081A'
 
 describe('入力値をマスs1,s2,s3にパースする', () => {
   const parser = new InputParser()
@@ -79,5 +79,17 @@ describe('入力値を読み込む', () => {
     const actual = loadInput(inputLoader)
 
     expect(actual).toBe(input)
+  })
+})
+
+describe('出力値を出力する', () => {
+  test('printOutputは、outputPrinterを呼び出す', () => {
+    const output = '1'
+    const outputPrinter = jest.fn(_ => _)
+
+    printOutput(output, outputPrinter)
+
+    expect(outputPrinter.mock.calls.length).toBe(1)
+    expect(outputPrinter.mock.calls[0][0]).toBe(output)
   })
 })
