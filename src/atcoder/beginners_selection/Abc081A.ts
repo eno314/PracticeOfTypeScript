@@ -1,14 +1,10 @@
 type Square = '0' | '1'
 
 export class Squares {
-  private readonly s1: Square
-  private readonly s2: Square
-  private readonly s3: Square
+  private readonly squares: Square[]
 
-  constructor (s1: string, s2: string, s3: string) {
-    this.s1 = this.validateSquareString(s1)
-    this.s2 = this.validateSquareString(s2)
-    this.s3 = this.validateSquareString(s3)
+  constructor (...squareStrings: [string, string, string]) {
+    this.squares = squareStrings.map(this.validateSquareString)
   }
 
   private validateSquareString (squareString: string): Square {
@@ -16,6 +12,10 @@ export class Squares {
       return squareString
     }
     throw new Error('input string violates constraint.')
+  }
+
+  countSquaresPlacedMarble (): number {
+    return this.squares.filter(square => square === '1').length
   }
 }
 
