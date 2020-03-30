@@ -27,3 +27,34 @@ describe('入力値の形式が不正の場合、例外を投げる', () => {
     }).toThrowError('input format is invalid.')
   })
 })
+
+describe('s1,s2,s3が制約に合致しない場合、例外を投げる', () => {
+  const parser = new InputParser()
+
+  test.each([
+    [' 00'],
+    ['211']
+  ])('InputParserのparseは、s1に当たる文字が0か1ではない場合、例外を投げる', (input: string) => {
+    expect(() => {
+      parser.parse(input)
+    }).toThrowError('input string violates constraint.')
+  })
+
+  test.each([
+    ['0 0'],
+    ['121']
+  ])('InputParserのparseは、s2に当たる文字が0か1ではない場合、例外を投げる', (input: string) => {
+    expect(() => {
+      parser.parse(input)
+    }).toThrowError('input string violates constraint.')
+  })
+
+  test.each([
+    ['00 '],
+    ['112']
+  ])('InputParserのparseは、s3に当たる文字が0か1ではない場合、例外を投げる', (input: string) => {
+    expect(() => {
+      parser.parse(input)
+    }).toThrowError('input string violates constraint.')
+  })
+})
