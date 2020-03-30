@@ -1,4 +1,4 @@
-import { InputParser, Squares } from './Abc081A'
+import { InputParser, loadInput, Squares } from './Abc081A'
 
 describe('入力値をマスs1,s2,s3にパースする', () => {
   const parser = new InputParser()
@@ -68,5 +68,16 @@ describe('ビー玉を置くことができるマスの数を計算する', () =
   ])('SquaresのcountSquaresPlacedMarbleは、s1,s2,s3の1の数を返す', (squares: Squares, expected: number) => {
     const actual = squares.countSquaresPlacedMarble()
     expect(actual).toBe(expected)
+  })
+})
+
+describe('入力値を読み込む', () => {
+  test('loadInputは、inputLoaderを呼び出しその値を返す', () => {
+    const input = '100'
+    const inputLoader = jest.fn(() => input)
+
+    const actual = loadInput(inputLoader)
+
+    expect(actual).toBe(input)
   })
 })

@@ -33,3 +33,7 @@ export class InputParser {
     return new Squares(input[0], input[1], input[2])
   }
 }
+
+export function loadInput (inputLoader: () => string): string {
+  return inputLoader()
+}
