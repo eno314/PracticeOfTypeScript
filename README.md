@@ -8,3 +8,5 @@
 * [Node.js+TypeScript でユニットテストを実行する](https://eno314.hatenadiary.com/entry/2020/03/19/123655)
 * [Node.js+TypeScriptでCIする](https://eno314.hatenadiary.com/entry/2020/03/20/071703)
 * [【AtCoder】Node.js+TypeScriptでPracticeAを解く](https://eno314.hatenadiary.com/entry/2020/03/28/175309)
+* [【AtCoder】Node.js+TypeScriptでABC086Aを解く](https://eno314.hatenadiary.com/entry/2020/03/29/144845)
+* [【AtCoder】Node.js+TypeScriptでABC081Aを解く](https://eno314.hatenadiary.com/entry/2020/03/31/093113)
