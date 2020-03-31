@@ -1,21 +1,17 @@
-import { InputParser, loadInput, printOutput, Squares } from './Abc081A'
+import { abc081A, loadInput, parseInput, printOutput, Squares } from './Abc081A'
 
 describe('入力値をマスs1,s2,s3にパースする', () => {
-  const parser = new InputParser()
-
   test.each([
     ['100', new Squares('1', '0', '0')],
     ['010', new Squares('0', '1', '0')],
     ['001', new Squares('0', '0', '1')]
   ])('InputParserのparseはSquaresを返す', (input: string, expected: Squares) => {
-    const actual = parser.parse(input)
+    const actual = parseInput(input)
     expect(actual).toEqual(expected)
   })
 })
 
 describe('入力値の形式が不正の場合、例外を投げる', () => {
-  const parser = new InputParser()
-
   test.each([
     [''],
     ['1'],
@@ -23,20 +19,18 @@ describe('入力値の形式が不正の場合、例外を投げる', () => {
     ['1001']
   ])('InputParserのparseは、入力値の文字列長が3ではない場合、例外を投げる', (input: string) => {
     expect(() => {
-      parser.parse(input)
+      parseInput(input)
     }).toThrowError('input format is invalid.')
   })
 })
 
 describe('s1,s2,s3が制約に合致しない場合、例外を投げる', () => {
-  const parser = new InputParser()
-
   test.each([
     [' 00'],
     ['211']
   ])('InputParserのparseは、s1に当たる文字が0か1ではない場合、例外を投げる', (input: string) => {
     expect(() => {
-      parser.parse(input)
+      parseInput(input)
     }).toThrowError('input string violates constraint.')
   })
 
@@ -45,7 +39,7 @@ describe('s1,s2,s3が制約に合致しない場合、例外を投げる', () =>
     ['121']
   ])('InputParserのparseは、s2に当たる文字が0か1ではない場合、例外を投げる', (input: string) => {
     expect(() => {
-      parser.parse(input)
+      parseInput(input)
     }).toThrowError('input string violates constraint.')
   })
 
@@ -54,7 +48,7 @@ describe('s1,s2,s3が制約に合致しない場合、例外を投げる', () =>
     ['112']
   ])('InputParserのparseは、s3に当たる文字が0か1ではない場合、例外を投げる', (input: string) => {
     expect(() => {
-      parser.parse(input)
+      parseInput(input)
     }).toThrowError('input string violates constraint.')
   })
 })
@@ -91,5 +85,17 @@ describe('出力値を出力する', () => {
 
     expect(outputPrinter.mock.calls.length).toBe(1)
     expect(outputPrinter.mock.calls[0][0]).toBe(output)
+  })
+})
+
+describe.each([
+  ['000', '0'],
+  ['100', '1'],
+  ['110', '2'],
+  ['111', '3']
+])('結合テスト', (input: string, expected: string) => {
+  test(`abc081Aは"${input}"を渡すと"${expected}"を返す`, () => {
+    const actual = abc081A(input)
+    expect(actual).toEqual(expected)
   })
 })
