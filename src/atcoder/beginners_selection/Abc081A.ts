@@ -26,7 +26,7 @@ export class Squares {
 }
 
 export function parseInput (input: string): Squares {
-  if (input.length !== 3) {
+  if (input.length < 3) {
     throw new Error('input format is invalid.')
   }
   return new Squares(input[0], input[1], input[2])
