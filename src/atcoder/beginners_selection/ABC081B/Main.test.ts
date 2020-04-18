@@ -32,4 +32,72 @@ describe('システムは入力値をパースして、Nと整数リストを作
     const actual = inputParser.parse(input)
     expect(actual).toEqual(expected)
   })
+
+  describe('代替コース:入力値のフォーマットが不正', () => {
+    test.each([
+      [''],
+      ['3']
+    ])('入力値の行数が2件未満の場合、システムは例外を投げて異常終了する', (input: string) => {
+      expect(() => inputParser.parse(input))
+        .toThrowError('input format is invalid.')
+    })
+
+    test.each([
+      ['\n8 12 40'],
+      ['a\n8 12 40']
+    ])('1行目が数字ではない場合、システムは例外を投げて異常終了する', (input: string) => {
+      expect(() => inputParser.parse(input))
+        .toThrowError('input format is invalid.')
+    })
+
+    test.each([
+      ['1\n'],
+      ['2\n8 a']
+    ])('2行目をスペースで分割して各要素が数字ではない場合、システムは例外を投げて異常終了する', (input: string) => {
+      expect(() => inputParser.parse(input))
+        .toThrowError('input format is invalid.')
+    })
+  })
+
+  describe('代替コース:入力値が制約に合致しない', () => {
+    test.each([
+      ['0\n1'],
+      ['-1\n1'],
+      ['1.1\n1']
+    ])('Nと整数リストのサイズが一致しない場合、システムは例外を投げて異常終了する', (input: string) => {
+      expect(() => inputParser.parse(input))
+        .toThrowError('input value is invalid.')
+    })
+
+    test('整数リストのサイズが200より大きい場合、システムは例外を投げて異常終了する', () => {
+      const numbers = '1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20'
+      const input = `201\n1 ${numbers} ${numbers} ${numbers} ${numbers} ${numbers} ${numbers} ${numbers} ${numbers} ${numbers} ${numbers}`
+      expect(() => inputParser.parse(input))
+        .toThrowError('input value is invalid.')
+    })
+
+    test.each([
+      ['1\n1.1'],
+      ['1\n0.1']
+    ])('Aiが整数ではない場合、システムは例外を投げて異常終了する', (input: string) => {
+      expect(() => inputParser.parse(input))
+        .toThrowError('input value is invalid.')
+    })
+
+    test.each([
+      ['1\n0'],
+      ['1\n-1']
+    ])('Aiが1より小さい場合、システムは例外を投げて異常終了する', (input: string) => {
+      expect(() => inputParser.parse(input))
+        .toThrowError('input value is invalid.')
+    })
+
+    test.each([
+      ['1\n10000000000'],
+      ['1\n1000000001']
+    ])('Aiが10の9乗より大きい場合、システムは例外を投げて異常終了する', (input: string) => {
+      expect(() => inputParser.parse(input))
+        .toThrowError('input value is invalid.')
+    })
+  })
 })

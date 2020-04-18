@@ -3,15 +3,39 @@ export class IntegerList {
   private readonly integers: number[]
 
   constructor (integers: number[]) {
+    this.validateIntegers(integers)
     this.integers = integers
+  }
+
+  private validateIntegers (integers: number[]): void {
+    if (integers.length > 200) {
+      throw new Error('input value is invalid.')
+    }
+
+    integers.forEach(intergersValue => {
+      if (!this.isValidIntegersValue(intergersValue)) {
+        throw new Error('input value is invalid.')
+      }
+    })
+  }
+
+  private isValidIntegersValue (num: number): boolean {
+    return Number.isInteger(num) && num >= 1 && num <= 1000000000
   }
 }
 
 export class InputParser {
   parse (input: string): IntegerList {
     const inputs = input.split('\n')
-    // const n = this.parseNumberString(inputs[0])
+    if (inputs.length < 2) {
+      throw new Error('input format is invalid.')
+    }
+
+    const n = this.parseNumberString(inputs[0])
     const numbers = inputs[1].split(' ').map(this.parseNumberString)
+    if (numbers.length !== n) {
+      throw new Error('input value is invalid.')
+    }
     return new IntegerList(numbers)
   }
 
