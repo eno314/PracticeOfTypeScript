@@ -22,6 +22,21 @@ export class IntegerList {
   private isValidIntegersValue (num: number): boolean {
     return Number.isInteger(num) && num >= 1 && num <= 1000000000
   }
+
+  calculateMinCountOfDivisibleOfAllValues (): number {
+    return this.integers.map(this.countOfDivisible)
+      .reduce((a, b) => Math.min(a, b))
+  }
+
+  private countOfDivisible (integerValue: number): number {
+    let currentValue = integerValue
+    let count = 0
+    while (currentValue % 2 === 0) {
+      currentValue = currentValue / 2
+      count++
+    }
+    return count
+  }
 }
 
 export class InputParser {
@@ -51,13 +66,9 @@ export class InputParser {
   }
 }
 
-export function calculateAnswer (integerList: IntegerList): string {
-  return ''
-}
-
 export function main (inputLoader: () => string, outputPrinter: (outputString: string) => void): void {
   const input = inputLoader()
   const integerList = new InputParser().parse(input)
-  const output = calculateAnswer(integerList)
-  outputPrinter(output)
+  const answer = integerList.calculateMinCountOfDivisibleOfAllValues()
+  outputPrinter(String(answer))
 }

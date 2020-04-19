@@ -100,4 +100,16 @@ describe('システムは入力値をパースして、Nと整数リストを作
         .toThrowError('input value is invalid.')
     })
   })
+
+  describe('システムは整数リストの各要素の2で割り切れる回数を計算し、最小値を答えとする', () => {
+    test.each([
+      [new IntegerList([8, 12, 40]), 2],
+      [new IntegerList([5, 6, 8, 10]), 0],
+      [new IntegerList([382253568, 723152896, 37802240, 379425024, 404894720, 471526144]), 8],
+      [new IntegerList([536870912]), 29]
+    ])('正常系', (integerList: IntegerList, expected: number) => {
+      const actual = integerList.calculateMinCountOfDivisibleOfAllValues()
+      expect(actual).toBe(expected)
+    })
+  })
 })
