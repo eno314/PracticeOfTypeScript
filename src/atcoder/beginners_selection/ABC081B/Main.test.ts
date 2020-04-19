@@ -1,6 +1,5 @@
-import { InputParser, IntegerList } from './Main'
+import { InputParser, IntegerList, main } from './Main'
 
-/*
 describe('受け入れテスト', () => {
   const mockOutputPrinter = jest.fn(_ => _)
 
@@ -21,7 +20,6 @@ describe('受け入れテスト', () => {
     expect(mockOutputPrinter.mock.calls[0][0]).toBe(expected)
   })
 })
-*/
 
 describe('システムは入力値をパースして、Nと整数リストを作成する', () => {
   const inputParser = new InputParser()

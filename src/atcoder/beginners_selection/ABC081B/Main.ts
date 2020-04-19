@@ -72,3 +72,12 @@ export function main (inputLoader: () => string, outputPrinter: (outputString: s
   const answer = integerList.calculateMinCountOfDivisibleOfAllValues()
   outputPrinter(String(answer))
 }
+
+// 以下、AtCoder提出用のコード
+// const inputLoader = (): string => {
+//   return require('fs').readFileSync('/dev/stdin', 'utf8')
+// }
+// const outputPrinter = (output: string): void => {
+//   console.log(output)
+// }
+// main(inputLoader, outputPrinter)
