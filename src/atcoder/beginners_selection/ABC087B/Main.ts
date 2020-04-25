@@ -80,7 +80,7 @@ export function main (inputLoader: () => string, outputPrinter: (outputString: s
   outputPrinter(String(answer))
 }
 
-// 以下、AtCoder提出用のコー
+// 以下、AtCoder提出用のコード
 // const inputLoader = (): string => {
 //   return require('fs').readFileSync('/dev/stdin', 'utf8')
 // }
