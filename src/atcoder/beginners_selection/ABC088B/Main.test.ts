@@ -1,4 +1,4 @@
-import { CardList, executeGame, parseInput } from './Main'
+import { calculateAnswer, CardList, executeGame, parseInput } from './Main'
 
 describe('システムは入力値をパースして、カードリストを作る', () => {
   describe('正常系', () => {
@@ -55,5 +55,17 @@ describe('システムはゲームを開始して、Aliceのカードリスト�
     const expected = [aliceCardList, bobCardList]
     const actual = executeGame(cardList)
     expect(actual).toEqual(expected)
+  })
+})
+
+describe('システムはAliceのカードリストの合計得点と、Bobのカードリストの合計得点の差を求めて、答えとする', () => {
+  test.each([
+    [new CardList([1]), new CardList([]), 1],
+    [new CardList([1]), new CardList([1]), 0],
+    [new CardList([7, 2]), new CardList([4]), 5],
+    [new CardList([20, 18]), new CardList([18, 2]), 18]
+  ])('Alice(%o)とBob(%o)の差は%i', (aliceCardList: CardList, bobCardList: CardList, expected: number) => {
+    const actual = calculateAnswer(aliceCardList, bobCardList)
+    expect(actual).toBe(expected)
   })
 })

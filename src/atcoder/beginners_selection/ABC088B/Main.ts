@@ -6,7 +6,10 @@ export class CardList {
   }
 
   sumScore (): number {
-    return 0
+    if (this.cards.length === 0) {
+      return 0
+    }
+    return this.cards.reduce((previous, current) => previous + current)
   }
 
   size (): number {
@@ -67,7 +70,7 @@ export function executeGame (cardList: CardList): [CardList, CardList] {
 }
 
 export function calculateAnswer (aliceCardList: CardList, bobCardList: CardList): number {
-  return 0
+  return aliceCardList.sumScore() - bobCardList.sumScore()
 }
 
 export function main (inputLoader: () => string, outputPrinter: (outputString: string) => void): void {
