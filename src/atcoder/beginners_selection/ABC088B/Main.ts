@@ -1,7 +1,15 @@
-export class CardList {
-  private readonly cards: number[]
+export class Card {
+  private readonly value: number
 
-  constructor (cards: number[]) {
+  constructor (value: number) {
+    this.value = value
+  }
+}
+
+export class CardList {
+  private readonly cards: Card[]
+
+  constructor (cards: Card[]) {
     this.cards = cards
   }
 
@@ -11,7 +19,34 @@ export class CardList {
 }
 
 export function parseInput (input: string): CardList {
-  return new CardList([1])
+  const throwError = (): void => { throw new Error('input format is invalid.') }
+
+  const parseNumberString = (numberString: string): number => {
+    if (numberString.length === 0) {
+      throwError()
+    }
+    const numberValue = Number(numberString)
+    if (Number.isNaN(numberValue) || !Number.isInteger(numberValue)) {
+      throwError()
+    }
+    if (numberValue < 1 || numberValue > 100) {
+      throwError()
+    }
+    return numberValue
+  }
+
+  const [nString, cardsString] = input.split('\n')
+  if (cardsString === undefined) {
+    throwError()
+  }
+
+  const n = parseNumberString(nString)
+  const cards = cardsString.split(' ').map(cardString => new Card(parseNumberString(cardString)))
+  if (n !== cards.length) {
+    throwError()
+  }
+
+  return new CardList(cards)
 }
 
 export function executeGame (cardList: CardList): [CardList, CardList] {
