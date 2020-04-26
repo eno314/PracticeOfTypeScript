@@ -42,6 +42,11 @@ describe('システムは入力値をパースして、カードリストを作�
     ])('aiが不正な値(%o)の場合、例外を投げる', (input: string) => {
       expect(() => parseInput(input)).toThrowError('input format is invalid.')
     })
+
+    test('Nとaiの数が一致しない場合、例外を投げる', () => {
+      const input = '1 2 3'
+      expect(() => parseInput(input)).toThrowError('input format is invalid.')
+    })
   })
 })
 
