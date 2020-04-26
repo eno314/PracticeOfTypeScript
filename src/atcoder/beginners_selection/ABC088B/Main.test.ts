@@ -1,14 +1,13 @@
-import { Card, CardList, parseInput } from './Main'
+import { CardList, executeGame, parseInput } from './Main'
 
 describe('システムは入力値をパースして、カードリストを作る', () => {
   describe('正常系', () => {
     const handredNumbers: number[] = Array(100).fill(100)
     const handerdNumbersString = handredNumbers.join(' ')
-    const handredCards = handredNumbers.map(value => new Card(value))
 
     test.each([
-      ['1\n1', new CardList([new Card(1)])],
-      [`100\n${handerdNumbersString}`, new CardList(handredCards)]
+      ['1\n1', new CardList([1])],
+      [`100\n${handerdNumbersString}`, new CardList(handredNumbers)]
     ])('%o をパースすると %o を生成する', (input: string, expected: CardList) => {
       const actual = parseInput(input)
       expect(actual).toEqual(expected)
@@ -43,5 +42,18 @@ describe('システムは入力値をパースして、カードリストを作�
     ])('aiが不正な値(%o)の場合、例外を投げる', (input: string) => {
       expect(() => parseInput(input)).toThrowError('input format is invalid.')
     })
+  })
+})
+
+describe('システムはゲームを開始して、AliceのカードリストとBobのカードリストを作る', () => {
+  test.each([
+    [new CardList([1]), new CardList([1]), new CardList([])],
+    [new CardList([1, 2]), new CardList([2]), new CardList([1])],
+    [new CardList([2, 7, 4]), new CardList([7, 2]), new CardList([4])],
+    [new CardList([20, 18, 2, 18]), new CardList([20, 18]), new CardList([18, 2])]
+  ])('%oの場合、Aliceは%o、Bobは%o', (cardList: CardList, aliceCardList: CardList, bobCardList: CardList) => {
+    const expected = [aliceCardList, bobCardList]
+    const actual = executeGame(cardList)
+    expect(actual).toEqual(expected)
   })
 })

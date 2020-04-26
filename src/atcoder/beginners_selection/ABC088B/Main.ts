@@ -1,20 +1,23 @@
-export class Card {
-  private readonly value: number
-
-  constructor (value: number) {
-    this.value = value
-  }
-}
-
 export class CardList {
-  private readonly cards: Card[]
+  private readonly cards: number[]
 
-  constructor (cards: Card[]) {
+  constructor (cards: number[]) {
     this.cards = cards
   }
 
   sumScore (): number {
     return 0
+  }
+
+  size (): number {
+    return this.cards.length
+  }
+
+  getAndRemoveMax (): [number, CardList] {
+    const maxCard = Math.max(...this.cards)
+    const maxCardIndex = this.cards.findIndex(card => card === maxCard)
+    const cardListRemovedMax = this.cards.slice(0, maxCardIndex).concat(this.cards.slice(maxCardIndex + 1))
+    return [maxCard, new CardList(cardListRemovedMax)]
   }
 }
 
@@ -41,7 +44,7 @@ export function parseInput (input: string): CardList {
   }
 
   const n = parseNumberString(nString)
-  const cards = cardsString.split(' ').map(cardString => new Card(parseNumberString(cardString)))
+  const cards = cardsString.split(' ').map(cardString => parseNumberString(cardString))
   if (n !== cards.length) {
     throwError()
   }
@@ -50,7 +53,17 @@ export function parseInput (input: string): CardList {
 }
 
 export function executeGame (cardList: CardList): [CardList, CardList] {
-  return [new CardList([1]), new CardList([1])]
+  const [aliceCards, bobCards]: [number[], number[]] = [[], []]
+  let [currentCardList, maxValue]: [CardList, number] = [cardList, 0]
+  for (let i = 0; i < cardList.size(); i++) {
+    [maxValue, currentCardList] = currentCardList.getAndRemoveMax()
+    if (i % 2 === 0) {
+      aliceCards.push(maxValue)
+    } else {
+      bobCards.push(maxValue)
+    }
+  }
+  return [new CardList(aliceCards), new CardList(bobCards)]
 }
 
 export function calculateAnswer (aliceCardList: CardList, bobCardList: CardList): number {
