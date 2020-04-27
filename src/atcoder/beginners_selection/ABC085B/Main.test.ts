@@ -7,6 +7,7 @@ describe('システムは入力値をパースして、餅の直径リストを�
     test.each([
       ['1\n1', new MochiDimeterList([1])],
       ['2\n1\n2', new MochiDimeterList([1, 2])],
+      ['3\n1\n2\n3\n', new MochiDimeterList([1, 2, 3])],
       [`100\n${handredCounterNumbers.join('\n')}`, new MochiDimeterList(handredCounterNumbers)]
     ])('%oをパースすると%oになる', (input: string, expected: MochiDimeterList) => {
       const actual = parseInput(input)

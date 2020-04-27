@@ -27,9 +27,11 @@ export function parseInput (input: string): MochiDimeterList {
     return numberValue
   }
 
-  const inputNumbers = input.split('\n').map(validateNumberString)
-  const mochiDimeters = inputNumbers.slice(1)
-  if (mochiDimeters.length < inputNumbers[0]) {
+  const inputs = input.split('\n')
+  const n = validateNumberString(inputs[0])
+
+  const mochiDimeters = inputs.slice(1, n + 1).map(validateNumberString)
+  if (mochiDimeters.length < n) {
     throwError()
   }
   return new MochiDimeterList(mochiDimeters)
@@ -40,4 +42,16 @@ export function countMochiOfMaxSizeOfKagamiMochi (mochiDimeterList: MochiDimeter
 }
 
 export function main (inputLoader: () => string, outputPrinter: (outputString: string) => void): void {
+  const mochiDimeterList = parseInput(inputLoader())
+  const answer = countMochiOfMaxSizeOfKagamiMochi(mochiDimeterList)
+  outputPrinter(String(answer))
 }
+
+// 以下、AtCoder提出用のコード
+// const inputLoader = (): string => {
+//   return require('fs').readFileSync('/dev/stdin', 'utf8')
+// }
+// const outputPrinter = (output: string): void => {
+//   console.log(output)
+// }
+// main(inputLoader, outputPrinter)
