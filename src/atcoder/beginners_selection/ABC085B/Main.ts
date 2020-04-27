@@ -1,8 +1,12 @@
 export class MochiDimeterList {
-  private readonly mochiDiameters: number[]
+  private readonly mochiDimeters: number[]
 
   constructor (mochiDimeters: number[]) {
-    this.mochiDiameters = mochiDimeters
+    this.mochiDimeters = mochiDimeters
+  }
+
+  countUniqMochiDimeters (): number {
+    return new Set(this.mochiDimeters).size
   }
 }
 
@@ -29,6 +33,10 @@ export function parseInput (input: string): MochiDimeterList {
     throwError()
   }
   return new MochiDimeterList(mochiDimeters)
+}
+
+export function countMochiOfMaxSizeOfKagamiMochi (mochiDimeterList: MochiDimeterList): number {
+  return mochiDimeterList.countUniqMochiDimeters()
 }
 
 export function main (inputLoader: () => string, outputPrinter: (outputString: string) => void): void {

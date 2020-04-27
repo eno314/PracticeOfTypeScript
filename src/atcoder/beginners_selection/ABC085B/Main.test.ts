@@ -1,4 +1,4 @@
-import { MochiDimeterList, parseInput } from './Main'
+import { countMochiOfMaxSizeOfKagamiMochi, MochiDimeterList, parseInput } from './Main'
 
 describe('システムは入力値をパースして、餅の直径リストを生成する', () => {
   describe('正常系', () => {
@@ -42,5 +42,18 @@ describe('システムは入力値をパースして、餅の直径リストを�
         expect(() => parseInput(input)).toThrowError('input format is invalid')
       })
     })
+  })
+})
+
+describe('システムは餅の直径リストを使い、鏡餅を作った場合の最大の段数を算出する', () => {
+  test.each([
+    [new MochiDimeterList([1]), 1],
+    [new MochiDimeterList([1, 2]), 2],
+    [new MochiDimeterList([10, 8, 8, 6]), 3],
+    [new MochiDimeterList([15, 15, 15, 15, 15]), 1],
+    [new MochiDimeterList([50, 30, 50, 100, 50, 80, 30]), 4]
+  ])('%oを使って鏡餅を作った場合、最大の段数は%i', (mochiDimeterList: MochiDimeterList, expected: number) => {
+    const actual = countMochiOfMaxSizeOfKagamiMochi(mochiDimeterList)
+    expect(actual).toBe(expected)
   })
 })
