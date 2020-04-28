@@ -1,3 +1,27 @@
+class Otoshidama {
+  private readonly countOf10000yen: number
+  private readonly countOf5000yen: number
+  private readonly countOf1000yen: number
+
+  constructor (countOf10000yen: number, countOf5000yen: number, countOf1000yen: number) {
+    this.countOf10000yen = countOf10000yen
+    this.countOf5000yen = countOf5000yen
+    this.countOf1000yen = countOf1000yen
+  }
+
+  amount (): number {
+    return (this.countOf10000yen * 10000) + (this.countOf5000yen * 5000) + (this.countOf1000yen * 1000)
+  }
+
+  equalsAmount (amount: number): boolean {
+    return amount === this.amount()
+  }
+
+  toString (): string {
+    return `${this.countOf10000yen} ${this.countOf5000yen} ${this.countOf1000yen}`
+  }
+}
+
 export function parseInput (input: string): [number, number] {
   const throwError = (): void => { throw new Error('invalid format input') }
 
@@ -20,6 +44,19 @@ export function parseInput (input: string): [number, number] {
     throwError()
   }
   return [n, y]
+}
+
+export function calculateAnswer (totalCount: number, totalAmount: number): string {
+  for (let counter10000 = totalCount; counter10000 >= 0; counter10000--) {
+    for (let counter5000 = totalCount - counter10000; counter5000 >= 0; counter5000--) {
+      const counter1000 = totalCount - counter10000 - counter5000
+      const otoshidama = new Otoshidama(counter10000, counter5000, counter1000)
+      if (otoshidama.equalsAmount(totalAmount)) {
+        return otoshidama.toString()
+      }
+    }
+  }
+  return '-1 -1 -1'
 }
 
 export function main (inputLoader: () => string, outputPrinter: (outputString: string) => void): void {
