@@ -60,4 +60,16 @@ export function calculateAnswer (totalCount: number, totalAmount: number): strin
 }
 
 export function main (inputLoader: () => string, outputPrinter: (outputString: string) => void): void {
+  const [n, y] = parseInput(inputLoader())
+  const answer = calculateAnswer(n, y)
+  outputPrinter(String(answer))
 }
+
+// 以下、AtCoder提出用のコード
+// const inputLoader = (): string => {
+//   return require('fs').readFileSync('/dev/stdin', 'utf8')
+// }
+// const outputPrinter = (output: string): void => {
+//   console.log(output)
+// }
+// main(inputLoader, outputPrinter)
