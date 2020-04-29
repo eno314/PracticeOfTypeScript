@@ -19,7 +19,8 @@ export function isMatchedTheCondition (input: string): boolean {
 }
 
 export function main (inputLoader: () => string, outputPrinter: (outputString: string) => void): void {
-  if (isMatchedTheConditionRecursively(inputLoader())) {
+  const inputs = inputLoader().split('\n')
+  if (isMatchedTheCondition(inputs[0])) {
     outputPrinter('YES')
   } else {
     outputPrinter('NO')
