@@ -34,24 +34,17 @@ class DaydreamText {
   equalToDaydreamWord (): boolean {
     return isDaydreamWord(this.text)
   }
-
-  isEmpty (): boolean {
-    return this.text.length === 0
-  }
 }
 
 export function isMatchedTheCondition (input: string): boolean {
-  if (input.length === 0) {
-    return false
-  }
   let daydreamText = new DaydreamText(input)
-  while (!daydreamText.isEmpty()) {
+  while (true) {
     if (daydreamText.equalToDaydreamWord()) {
       return true
     }
     const nextDaydreamText = daydreamText.removeDaydreamWord()
     if (nextDaydreamText === null) {
-      return false
+      break
     }
     daydreamText = nextDaydreamText
   }
