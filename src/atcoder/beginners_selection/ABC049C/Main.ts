@@ -1,52 +1,59 @@
-const conditions = ['dream', 'dreamer', 'erase', 'eraser']
+const daydreamWords = ['dream', 'dreamer', 'erase', 'eraser']
 
-export function isMatchedTheConditionRecursively (target: string): boolean {
-  if (conditions.includes(target)) {
-    return true
+function getTextsRemoveDaydreamWord (text: string): string[] {
+  return daydreamWords.filter(word => text.startsWith(word))
+    .map(word => text.slice(word.length))
+}
+
+function isDaydreamWord (text: string): boolean {
+  return daydreamWords.includes(text)
+}
+
+class DaydreamText {
+  private readonly text: string
+
+  constructor (text: string) {
+    this.text = text
   }
-  const nextTargets = conditions.filter(condition => target.startsWith(condition))
-    .map(condition => target.slice(condition.length))
-  for (let i = 0; i < nextTargets.length; i++) {
-    if (isMatchedTheConditionRecursively(nextTargets[i])) {
-      return true
+
+  removeDaydreamWord (): DaydreamText | null {
+    const textsRemovedDaydreamWord = getTextsRemoveDaydreamWord(this.text)
+    if (textsRemovedDaydreamWord.length === 0) {
+      return null
     }
-  }
-  return false
-}
 
-function getNextStrings (currentString: string): string[] {
-  return conditions.filter(condition => currentString.startsWith(condition))
-    .map(condition => currentString.slice(condition.length))
-}
-
-function getNextString (currentString: string): string | null {
-  const nextStrings = getNextStrings(currentString)
-  if (nextStrings.length === 0) {
+    for (let i = 0; i < textsRemovedDaydreamWord.length; i++) {
+      const textRemovedDaydreamWord = textsRemovedDaydreamWord[i]
+      if (getTextsRemoveDaydreamWord(textRemovedDaydreamWord).length > 0) {
+        return new DaydreamText(textRemovedDaydreamWord)
+      }
+    }
     return null
   }
-  for (let i = 0; i < nextStrings.length; i++) {
-    const nextString = nextStrings[i]
-    if (getNextStrings(nextString).length > 0) {
-      return nextString
-    }
+
+  equalToDaydreamWord (): boolean {
+    return isDaydreamWord(this.text)
   }
-  return null
+
+  isEmpty (): boolean {
+    return this.text.length === 0
+  }
 }
 
 export function isMatchedTheCondition (input: string): boolean {
   if (input.length === 0) {
     return false
   }
-  let currentString = input
-  while (currentString.length > 0) {
-    if (conditions.includes(currentString)) {
+  let daydreamText = new DaydreamText(input)
+  while (!daydreamText.isEmpty()) {
+    if (daydreamText.equalToDaydreamWord()) {
       return true
     }
-    const nextString = getNextString(currentString)
-    if (nextString === null) {
+    const nextDaydreamText = daydreamText.removeDaydreamWord()
+    if (nextDaydreamText === null) {
       return false
     }
-    currentString = nextString
+    daydreamText = nextDaydreamText
   }
   return false
 }
