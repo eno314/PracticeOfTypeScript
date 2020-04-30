@@ -32,16 +32,24 @@ describe('システムは入力値が条件に合致するか判定する', () =
     expect(actual).toBe(false)
   })
 
+  const dream100000 = Array(20000).fill('dream').join('')
+
   test.each([
     ['dreamdream'],
     ['dreamdreamer'],
     ['dreamerase'],
     ['dreameraser'],
     ['dreamerdreamer'],
+    ['erasedream'],
+    ['erasedreamer'],
     ['eraseerase'],
+    ['eraseeraser'],
+    ['eraserdream'],
+    ['eraserdreamer'],
+    ['erasererase'],
     ['erasereraser'],
-    ['dreamerasereraser']
-  ])('入力値が2単語目以降も一致する(%o)の場合、trueを返す', (input: string) => {
+    [dream100000]
+  ])('入力値が2単語目以降も一致するの場合、trueを返す', (input: string) => {
     const actual = isMatchedTheCondition(input)
     expect(actual).toBe(true)
   })
