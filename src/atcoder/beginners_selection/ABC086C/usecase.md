@@ -26,3 +26,24 @@ https://atcoder.jp/contests/abs/tasks/arc089_a
             * 要素数が3未満
             * 各要素数字ではない、整数ではない、1より小さい、100000より大きい
             * 先頭の要素の数字が、次の要素の数字以下
+
+
+describe('旅行プラン', () => {
+  describe('旅行プランが実現可能か判定する', () => {
+    test.each([
+      [new TravelPlan([new VisitPoint(1, 1, 0)]), true],
+      [new TravelPlan([
+        new VisitPoint(3, 1, 2),
+        new VisitPoint(6, 1, 1)
+      ]), true],
+      [new TravelPlan([
+        new VisitPoint(10, 10, 0),
+        new VisitPoint(20, 10, 10),
+        new VisitPoint(40, 20, 20)
+      ]), true]
+    ])('%oが実現可能かどうかの判定結果は%o', (travelPlan: TravelPlan, expected: boolean) => {
+      const actual = travelPlan.canDo()
+      expect(actual).toBe(expected)
+    })
+  })
+})
