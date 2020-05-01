@@ -168,9 +168,27 @@ export function parseInput (input: string): TravelPlan {
 
   const lines = input.split('\n')
   const n = parseN(lines[0])
-  const visitPoints = lines.splice(1, n + 1).map(parseVisitPoint)
+  const visitPoints = lines.splice(1, n).map(parseVisitPoint)
   if (visitPoints.length < n) {
     throwError()
   }
   return new TravelPlan(visitPoints)
 }
+
+export function main (inputLoader: () => string, outputPrinter: (outputString: string) => void): void {
+  const travelPlan = parseInput(inputLoader())
+  if (travelPlan.canDo()) {
+    outputPrinter('Yes')
+  } else {
+    outputPrinter('No')
+  }
+}
+
+// 以下、AtCoder提出用のコード
+// const inputLoader = (): string => {
+//   return require('fs').readFileSync('/dev/stdin', 'utf8')
+// }
+// const outputPrinter = (output: string): void => {
+//   console.log(output)
+// }
+// main(inputLoader, outputPrinter)
