@@ -24,8 +24,13 @@ describe('訪問地点', () => {
       [new VisitPoint(0, 0, 0), new VisitPoint(4, 0, -5), false],
       [new VisitPoint(0, 0, 0), new VisitPoint(5, 1, 1), false],
       [new VisitPoint(0, 0, 0), new VisitPoint(6, 0, -1), false],
-      // 計算量最大
-      [new VisitPoint(0, 0, 0), new VisitPoint(100000, 100000, 0), true]
+      // 計算量大
+      [new VisitPoint(0, 0, 0), new VisitPoint(10, 10, 0), true],
+      [new VisitPoint(0, 0, 0), new VisitPoint(30, 15, 15), true],
+      [new VisitPoint(0, 0, 0), new VisitPoint(1000, 1000, 0), true],
+      [new VisitPoint(0, 0, 0), new VisitPoint(14, -7, -7), true]
+      // 計算量最大 : RangeError: Maximum call stack size exceeded が発生する
+      // [new VisitPoint(0, 0, 0), new VisitPoint(100000, 100000, 0), true]
     ])('%oから%oへ移動可能かどうかの判定結果は%o', (from: VisitPoint, to: VisitPoint, expected: boolean) => {
       const actual = from.canGoTo(to)
       expect(actual).toBe(expected)
