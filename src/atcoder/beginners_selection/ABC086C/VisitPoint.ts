@@ -9,28 +9,35 @@ export class VisitPoint {
     this.y = y
   }
 
-  diffTime (other: VisitPoint): number {
+  canGoTo (to: VisitPoint): boolean {
+    return this.canGoToByDistanceAndTime(to)
+  }
+
+  private canGoToByDistanceAndTime (to: VisitPoint): boolean {
+    const diffTime = this.diffTime(to)
+    const distance = this.distance(to)
+    if (!this.canArrive(diffTime, distance)) {
+      return false
+    }
+    const extraTime = diffTime - distance
+    return this.canBackToSamePoint(extraTime)
+  }
+
+  private diffTime (other: VisitPoint): number {
     return Math.abs(this.t - other.t)
   }
 
-  distance (other: VisitPoint): number {
+  private distance (other: VisitPoint): number {
     const dx = Math.abs(this.x - other.x)
     const dy = Math.abs(this.y - other.y)
     return dx + dy
   }
 
-  canGoTo (to: VisitPoint): boolean {
-    const distance = this.distance(to)
-    const dt = this.diffTime(to)
-    if (distance > dt) {
-      // 辿り着けない
-      return false
-    }
-    const extraTime = dt - distance
-    if (extraTime % 2 === 0) {
-      return true
-    } else {
-      return false
-    }
+  private canArrive (diffTime: number, distance: number): boolean {
+    return diffTime >= distance
+  }
+
+  private canBackToSamePoint (time: number): boolean {
+    return time % 2 === 0
   }
 }
