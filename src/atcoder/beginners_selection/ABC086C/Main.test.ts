@@ -1,43 +1,6 @@
-import { parseInput, TravelPlan } from './Main'
+import { parseInput } from './Main'
+import { TravelPlan } from './TravelPlan'
 import { VisitPoint } from './VisitPoint'
-
-describe('旅行プラン', () => {
-  describe('旅行プランが実現可能か判定する', () => {
-    test.each([
-      [
-        new TravelPlan([
-          new VisitPoint(1, 1, 0)
-        ]),
-        true
-      ],
-      [
-        new TravelPlan([
-          new VisitPoint(2, 1, 0)
-        ]),
-        false
-      ],
-      [
-        new TravelPlan([
-          new VisitPoint(1, -1, 0),
-          new VisitPoint(2, -1, -1),
-          new VisitPoint(4, 0, 0)
-        ]),
-        true
-      ],
-      [
-        new TravelPlan([
-          new VisitPoint(1, -1, 0),
-          new VisitPoint(2, -1, -1),
-          new VisitPoint(4, 0, -1)
-        ]),
-        false
-      ]
-    ])('%oの旅行プランの可否は%o', (travelPlan: TravelPlan, expected: boolean) => {
-      const actual = travelPlan.canDo()
-      expect(actual).toBe(expected)
-    })
-  })
-})
 
 describe('システムは入力値をパースして、旅行プランを作成する', () => {
   describe('基本コース', () => {

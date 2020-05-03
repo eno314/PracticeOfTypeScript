@@ -1,26 +1,5 @@
+import { TravelPlan } from './TravelPlan'
 import { VisitPoint } from './VisitPoint'
-
-export class TravelPlan {
-  private static readonly FIRST_TRAVEL_POINT = new VisitPoint(0, 0, 0)
-
-  private readonly visitPoints: VisitPoint[]
-
-  constructor (visitPoints: VisitPoint[]) {
-    this.visitPoints = visitPoints
-  }
-
-  canDo (): boolean {
-    let current = TravelPlan.FIRST_TRAVEL_POINT
-    for (let i = 0; i < this.visitPoints.length; i++) {
-      const next = this.visitPoints[i]
-      if (!current.canGoTo(next)) {
-        return false
-      }
-      current = next
-    }
-    return true
-  }
-}
 
 export function parseInput (input: string): TravelPlan {
   const maxNumber = 100000
