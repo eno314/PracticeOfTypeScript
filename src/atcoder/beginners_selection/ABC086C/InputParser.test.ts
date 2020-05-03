@@ -1,4 +1,4 @@
-import { parseInput } from './InputParser'
+import { MAX_NUMBER, MIN_N, MIN_T, MIN_X, MIN_Y, parseInput } from './InputParser'
 import { TravelPlan } from './TravelPlan'
 import { VisitPoint } from './VisitPoint'
 
@@ -7,7 +7,7 @@ describe('入力値文字列をパースして旅行プランを作成する', (
     describe('各項目が制約内の最小値', () => {
       test.each([
         [
-          '1\n1 0 0',
+          `${MIN_N}\n${MIN_T} ${MIN_X} ${MIN_Y}`,
           new TravelPlan([
             new VisitPoint(1, 0, 0)
           ])
@@ -16,17 +16,17 @@ describe('入力値文字列をパースして旅行プランを作成する', (
     })
 
     describe('各項目が制約内の最大値', () => {
-      const inputTravelPlans = Array(100000).fill(0).map((_, index) => {
+      const inputTravelPlans = Array(MAX_NUMBER).fill(0).map((_, index) => {
         return `${index + 1} ${index + 1} ${index + 1}`
       })
 
-      const visitPoints = Array(100000).fill(0).map((_, index) => {
+      const visitPoints = Array(MAX_NUMBER).fill(0).map((_, index) => {
         return new VisitPoint(index + 1, index + 1, index + 1)
       })
 
       test.each([
         [
-          `100000\n${inputTravelPlans.join('\n')}`,
+          `${MAX_NUMBER}\n${inputTravelPlans.join('\n')}`,
           new TravelPlan(visitPoints)
         ]
       ])('最大の入力値でもパースできる', testParse)
@@ -55,13 +55,13 @@ describe('入力値文字列をパースして旅行プランを作成する', (
 
       describe('最小値より1小さい', () => {
         test.each([
-          '0\n1 1 1'
+          `${MIN_N - 1}\n1 1 1`
         ])('%oをパースすると例外が発生する', testWhenInvalidFormat)
       })
 
       describe('最大値より1大きい', () => {
         test.each([
-          '100001\n1 1 1'
+          `${MAX_NUMBER + 1}\n1 1 1`
         ])('%oをパースすると例外が発生する', testWhenInvalidFormat)
       })
     })
@@ -100,17 +100,17 @@ describe('入力値文字列をパースして旅行プランを作成する', (
 
       describe('半角スペースで分割した各要素が最小値より1小さい', () => {
         test.each([
-          '2\n1 1 1\n0 2 2',
-          '2\n1 1 1\n2 -1 2',
-          '2\n1 1 1\n2 2 -1'
+          `2\n1 1 1\n${MIN_T - 1} 2 2`,
+          `2\n1 1 1\n2 ${MIN_X - 1} 2`,
+          `2\n1 1 1\n2 2 ${MIN_Y - 1}`
         ])('%oをパースすると例外が発生する', testWhenInvalidFormat)
       })
 
       describe('半角スペースで分割した各要素が最大値より1大きい', () => {
         test.each([
-          '2\n1 1 1\n100001 2 2',
-          '2\n1 1 1\n2 100001 2',
-          '2\n1 1 1\n2 2 100001'
+          `2\n1 1 1\n${MAX_NUMBER + 1} 2 2`,
+          `2\n1 1 1\n2 ${MAX_NUMBER + 1} 2`,
+          `2\n1 1 1\n2 2 ${MAX_NUMBER + 1}`
         ])('%oをパースすると例外が発生する', testWhenInvalidFormat)
       })
     })

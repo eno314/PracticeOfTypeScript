@@ -1,50 +1,49 @@
+import { parseToInteger, throwError, validateRange } from '../../libs/InputParserLibrary'
 import { TravelPlan } from './TravelPlan'
 import { VisitPoint } from './VisitPoint'
 
+export const MAX_NUMBER = 100000
+export const MIN_N = 1
+export const MIN_T = 1
+export const MIN_X = 0
+export const MIN_Y = 0
+
 export function parseInput (input: string): TravelPlan {
-  const maxNumber = 100000
+  return parseToTravelPlan(input)
+}
 
-  const throwError = (): void => { throw new Error('invalid format input') }
-
-  const parseInteger = (strValue: string): number => {
-    if (strValue.length === 0) {
-      throwError()
-    }
-    const intValue = Number(strValue)
-    if (!Number.isInteger(intValue)) {
-      throwError()
-    }
-    return intValue
-  }
-
-  const validateRange = (value: number, min: number, max: number): void => {
-    if (value < min || value > max) {
-      throwError()
-    }
-  }
-
-  const parseN = (line: string): number => {
-    const n = parseInteger(line)
-    validateRange(n, 1, maxNumber)
-    return n
-  }
-
-  const parseVisitPoint = (line: string): VisitPoint => {
-    const [t, x, y] = line.split(' ').map(parseInteger)
-    if (x === undefined || y === undefined) {
-      throwError()
-    }
-    validateRange(t, 1, maxNumber)
-    validateRange(x, 0, maxNumber)
-    validateRange(y, 0, maxNumber)
-    return new VisitPoint(t, x, y)
-  }
-
-  const lines = input.split('\n')
-  const n = parseN(lines[0])
-  const visitPoints = lines.splice(1, n).map(parseVisitPoint)
+function parseToTravelPlan (input: string): TravelPlan {
+  const [n, visitPoints] = parseNAndVisitPoints(input)
   if (visitPoints.length < n) {
     throwError()
   }
   return new TravelPlan(visitPoints)
+}
+
+function parseNAndVisitPoints (input: string): [number, VisitPoint[]] {
+  const lines = input.split('\n')
+  const n = parseN(lines[0])
+  const visitPoints = parseVisitPoints(lines.splice(1, n))
+  return [n, visitPoints]
+}
+
+function parseN (line: string): number {
+  const n = parseToInteger(line)
+  validateRange(n, MIN_N, MAX_NUMBER)
+  return n
+}
+
+function parseVisitPoints (visitPointInputs: string[]): VisitPoint[] {
+  return visitPointInputs.map(parseVisitPoint)
+}
+
+function parseVisitPoint (line: string): VisitPoint {
+  const [t, x, y] = line.split(' ').map(parseToInteger)
+  if (x === undefined || y === undefined) {
+    throwError()
+  }
+  validateRange(t, MIN_T, MAX_NUMBER)
+  validateRange(x, MIN_X, MAX_NUMBER)
+  validateRange(y, MIN_Y, MAX_NUMBER)
+  return new VisitPoint(t, x, y)
 }
