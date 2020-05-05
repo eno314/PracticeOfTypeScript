@@ -1,10 +1,4 @@
 
-export type OutputMaker = () => string
-export type InputParser = (input: string) => OutputMaker
-
-type InputLoader = () => string
-type OutputPrinter = (output: string) => void
-
 export function defaultInputLoader (): string {
   return require('fs').readFileSync('/dev/stdin', 'utf8')
 }
@@ -12,25 +6,23 @@ export function defaultOutputPrinter (output: string): void {
   console.log(output)
 }
 
-export class SimpleMain {
-  private readonly inputParser: InputParser
-  private readonly inputLoader: InputLoader
-  private readonly outputPrinter: OutputPrinter
+export abstract class SimpleMain {
+  private readonly inputLoader: () => string
+  private readonly outputPrinter: (output: string) => void
 
   constructor (
-    inputParser: InputParser,
-    inputLoader: InputLoader = defaultInputLoader,
-    outputPrinter: OutputPrinter = defaultOutputPrinter
+    inputLoader: () => string = defaultInputLoader,
+    outputPrinter: (output: string) => void = defaultOutputPrinter
   ) {
-    this.inputParser = inputParser
     this.inputLoader = inputLoader
     this.outputPrinter = outputPrinter
   }
 
   execute (): void {
     const input = this.inputLoader()
-    const outputMaker = this.inputParser(input)
-    const output = outputMaker()
+    const output = this.translate(input)
     this.outputPrinter(output)
   }
+
+  abstract translate(input: string): string
 }

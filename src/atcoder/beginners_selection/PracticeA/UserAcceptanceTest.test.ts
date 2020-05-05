@@ -1,6 +1,6 @@
-import { main } from './Main'
+import { Main } from './Main'
 
-describe('受け入れテスト', () => {
+describe('PracticeAの受け入れテスト', () => {
   const mockOutputPrinter = jest.fn(_ => _)
 
   test.each([
@@ -9,7 +9,8 @@ describe('受け入れテスト', () => {
   ])('入力値を読み込み、入力値をパースして、出力値に変換し、出力する', (inputString: string, expectedOutputString: string) => {
     const mockInputLoader = jest.fn(() => inputString)
 
-    main(mockInputLoader, mockOutputPrinter)
+    const main = new Main(mockInputLoader, mockOutputPrinter)
+    main.execute()
 
     expect(mockInputLoader.mock.calls.length).toBe(1)
     expect(mockOutputPrinter.mock.calls.length).toBe(1)
