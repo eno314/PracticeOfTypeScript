@@ -5,6 +5,13 @@ export type InputParser = (input: string) => OutputMaker
 type InputLoader = () => string
 type OutputPrinter = (output: string) => void
 
+export function defaultInputLoader (): string {
+  return require('fs').readFileSync('/dev/stdin', 'utf8')
+}
+export function defaultOutputPrinter (output: string): void {
+  console.log(output)
+}
+
 export class SimpleMain {
   private readonly inputParser: InputParser
   private readonly inputLoader: InputLoader
@@ -12,8 +19,8 @@ export class SimpleMain {
 
   constructor (
     inputParser: InputParser,
-    inputLoader: InputLoader,
-    outputPrinter: OutputPrinter
+    inputLoader: InputLoader = defaultInputLoader,
+    outputPrinter: OutputPrinter = defaultOutputPrinter
   ) {
     this.inputParser = inputParser
     this.inputLoader = inputLoader

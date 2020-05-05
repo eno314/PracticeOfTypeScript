@@ -1,4 +1,4 @@
-import { SimpleMain } from './SimpleMain'
+import { defaultInputLoader, defaultOutputPrinter, SimpleMain } from './SimpleMain'
 
 describe('入力値から出力値を生成して出力するシンプルなAtCoderの問題用のMain', () => {
   describe('実行時のワークフロー', () => {
@@ -39,5 +39,16 @@ describe('入力値から出力値を生成して出力するシンプルなAtCo
       expect(mockOutputPrinter.mock.calls.length).toBe(1)
       expect(mockOutputPrinter.mock.calls[0][0]).toBe(outputString)
     }
+  })
+})
+
+describe('inputLoaderとoutputPrinterのデフォルト値', () => {
+  test('inputLoaderとoutputPrinterを指定せずにSimpleMainをインスタンス化すると、デフォルト値が設定される', () => {
+    const mockInputParser = jest.fn(_ => () => 'test')
+    const expected = new SimpleMain(mockInputParser, defaultInputLoader, defaultOutputPrinter)
+
+    const actual = new SimpleMain(mockInputParser)
+
+    expect(actual).toEqual(expected)
   })
 })
