@@ -1,8 +1,11 @@
+import { SimpleMain } from '../../libs/SimpleMain'
 import { InputParser } from './InputParser'
 
 const inputParser = new InputParser()
 
-export function main (inputLoader: () => string, outputPrinter: (outputString: string) => void): void {
-  const data = inputParser.parse(inputLoader())
-  outputPrinter(data.toString())
+export class Main extends SimpleMain {
+  translate (input: string): string {
+    const data = inputParser.parse(input)
+    return data.toString()
+  }
 }

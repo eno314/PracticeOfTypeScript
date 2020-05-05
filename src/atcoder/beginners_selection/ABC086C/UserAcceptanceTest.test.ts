@@ -1,4 +1,4 @@
-import { main } from './Main'
+import { Main } from './Main'
 
 describe('ABC0856の受け入れテスト', () => {
   const mockOutputPrinter = jest.fn(_ => _)
@@ -10,9 +10,10 @@ describe('ABC0856の受け入れテスト', () => {
   ])('%oを入力値として渡すと、%sを出力する', (input: string, expected: string) => {
     // setup
     const mockInputLoader = jest.fn(() => input)
+    const main = new Main(mockInputLoader, mockOutputPrinter)
 
     // execute
-    main(mockInputLoader, mockOutputPrinter)
+    main.execute()
 
     // verify
     expect(mockInputLoader.mock.calls.length).toBe(1)
