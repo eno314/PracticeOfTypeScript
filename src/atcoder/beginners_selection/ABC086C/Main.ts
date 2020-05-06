@@ -1,13 +1,19 @@
-import { SimpleMain } from '../../libs/SimpleMain'
+import { defaultInputLoader, defaultOutputPrinter, SimpleMain } from '../../libs/SimpleMain'
 import { parseInput } from './InputParser'
+import { TravelPlan } from './TravelPlan'
 
-export class Main extends SimpleMain {
-  translate (input: string): string {
-    const travelPlan = parseInput(input)
-    if (travelPlan.canDo()) {
-      return 'Yes'
-    } else {
-      return 'No'
-    }
-  }
+export const outputFactory = (travelPlan: TravelPlan): string => {
+  return travelPlan.canDo() ? 'Yes' : 'No'
+}
+
+export function mainFactory (
+  inputLoader: () => string = defaultInputLoader,
+  outputPrinter: (output: string) => void = defaultOutputPrinter
+): SimpleMain<TravelPlan> {
+  return new SimpleMain<TravelPlan>(
+    parseInput,
+    outputFactory,
+    inputLoader,
+    outputPrinter
+  )
 }
