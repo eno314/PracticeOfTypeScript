@@ -1,4 +1,5 @@
-import { abc081A, loadInput, parseInput, printOutput, Squares } from './Abc081A'
+import { abc081A, loadInput, parseInput, printOutput } from './Abc081A'
+import { Squares } from './ABC081A/Squares'
 
 describe('入力値をマスs1,s2,s3にパースする', () => {
   test.each([
@@ -49,18 +50,6 @@ describe('s1,s2,s3が制約に合致しない場合、例外を投げる', () =>
     expect(() => {
       parseInput(input)
     }).toThrowError('input string violates constraint.')
-  })
-})
-
-describe('ビー玉を置くことができるマスの数を計算する', () => {
-  test.each([
-    [new Squares('0', '0', '0'), 0],
-    [new Squares('1', '0', '0'), 1],
-    [new Squares('1', '1', '0'), 2],
-    [new Squares('1', '1', '1'), 3]
-  ])('SquaresのcountSquaresPlacedMarbleは、s1,s2,s3の1の数を返す', (squares: Squares, expected: number) => {
-    const actual = squares.countSquaresPlacedMarble()
-    expect(actual).toBe(expected)
   })
 })
 

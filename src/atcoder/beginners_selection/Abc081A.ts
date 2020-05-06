@@ -1,16 +1,4 @@
-import { Square } from './ABC081A/Square'
-
-export class Squares {
-  private readonly squares: Square[]
-
-  constructor (...squareStrings: [string, string, string]) {
-    this.squares = squareStrings.map(squareString => new Square(squareString))
-  }
-
-  countSquaresPlacedMarble (): number {
-    return this.squares.filter(square => square.canPlaceMarble()).length
-  }
-}
+import { Squares } from './ABC081A/Squares'
 
 export function parseInput (input: string): Squares {
   if (input.length < 3) {
